@@ -30,8 +30,7 @@ function Get-IPAPIInfo {
     }
     $ipResult = Invoke-restmethod -method get -uri "http://ip-api.com/json/$($ip)"
     Start-Sleep -s 1
-    # Edit this with your key and remove the 2 lines above if you're using the Pro version of IP-API.com (recommended).
-    #$ipResult = Invoke-restmethod -method get -uri "http://pro.ip-api.com/json/$($ip)?key=YOURIP-APIKEYHERE"
+    
     $ipResult | Add-Member originalQuery $originalQuery -force
     $ipResult
 }
