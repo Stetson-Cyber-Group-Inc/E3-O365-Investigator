@@ -1,13 +1,12 @@
-﻿Install-Module ExchangeOnlineManagement
+$ErrorActionPreference = "SilentlyContinue"
+Install-Module ExchangeOnlineManagement
 Connect-ExchangeOnline
 $Suspect = Read-Host "what email address are we investigating?"
 $Company1 = Read-Host "what is the name of the company? (no spaces - this will be the folder name)"
 New-Item -ItemType Directory -Force -Path C:\temp\$Company1 | out-null
 write-host "[+]....Pulling logs down......"
 write-host "[+]....This will take a few min......"
-$logs = Search-UnifiedAuditLog -ResultSize 10000 -StartDate (Get-Date).AddDays(-30) -EndDate (Get-Date) -UserIds $Suspect
-#$logs = Search-MailboxAuditLog -ResultSize 5000 -StartDate (Get-Date).AddDays(-10) -EndDate (Get-Date) -Identity $Suspect -ShowDetails
-#$logs | group-object operations 
+$logs = Search-UnifiedAuditLog -ResultSize 5000 -StartDate (Get-Date).AddDays(-60) -EndDate (Get-Date) -UserIds $Suspect
 $auditdata = $logs.auditdata | ConvertFrom-Json
 function Get-IPAPIInfo {
     Param(
